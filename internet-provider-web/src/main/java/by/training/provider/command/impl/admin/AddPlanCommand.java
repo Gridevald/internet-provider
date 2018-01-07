@@ -1,6 +1,7 @@
 package by.training.provider.command.impl.admin;
 
 import by.training.provider.command.Command;
+import by.training.provider.command.ParamNames;
 import by.training.provider.command.enums.PageEnum;
 import by.training.provider.command.util.PlanValidator;
 import by.training.provider.dao.exception.DataException;
@@ -25,21 +26,21 @@ public class AddPlanCommand implements Command {
 
         Plan plan = new Plan();
 
-        String name =  request.getParameter("name");
+        String name =  request.getParameter(ParamNames.NAME);
         plan.setName(name);
 
-        String description = request.getParameter("description");
+        String description = request.getParameter(ParamNames.DESCRIPTION);
         plan.setDescription(description);
 
-        String downloadSpeedStr = request.getParameter("downloadSpeed");
+        String downloadSpeedStr = request.getParameter(ParamNames.DOWNLOAD_SPEED);
         Integer downloadSpeed = Integer.valueOf(downloadSpeedStr);
         plan.setDownloadSpeed(downloadSpeed);
 
-        String uploadSpeedStr = request.getParameter("uploadSpeed");
+        String uploadSpeedStr = request.getParameter(ParamNames.UPLOAD_SPEED);
         Integer uploadSpeed = Integer.valueOf(uploadSpeedStr);
         plan.setUploadSpeed(uploadSpeed);
 
-        String priceStr = request.getParameter("price");
+        String priceStr = request.getParameter(ParamNames.PRICE);
         BigDecimal price = new BigDecimal(priceStr);
         plan.setPrice(price);
 
@@ -50,7 +51,7 @@ public class AddPlanCommand implements Command {
                 return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
             }
         } else {
-            request.setAttribute("planError", 1);
+            request.setAttribute(ParamNames.PLAN_ERROR, 1);
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.SET_PLAN);
         }
 

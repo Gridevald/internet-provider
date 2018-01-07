@@ -1,6 +1,7 @@
 package by.training.provider.command.impl.admin;
 
 import by.training.provider.command.Command;
+import by.training.provider.command.ParamNames;
 import by.training.provider.command.enums.PageEnum;
 import by.training.provider.dao.exception.DataException;
 import by.training.provider.dto.PageResponse;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class BlockUnblockUserCommand implements Command {
 
+    private static final String BLOCK_STATUS = "1";
     private UserService service;
 
     public BlockUnblockUserCommand(UserService service) {
@@ -21,14 +23,14 @@ public class BlockUnblockUserCommand implements Command {
     @Override
     public PageResponse execute(HttpServletRequest request) {
 
-        String userIdStr = request.getParameter("userToBlock");
+        String userIdStr = request.getParameter(ParamNames.USER_TO_BLOCK);
         Integer userId = Integer.valueOf(userIdStr);
 
         try {
             User user = service.getUserById(userId);
-            String block = request.getParameter("block");
+            String block = request.getParameter(ParamNames.BLOCK);
 
-            if ("1".equals(block)) {
+            if (BLOCK_STATUS.equals(block)) {
                 user.setIsBlocked((byte) 1);
             } else {
                 user.setIsBlocked((byte) 0);

@@ -16,7 +16,7 @@ public class LoginCommand implements Command {
 
         String role = (String) request.getSession().getAttribute(ParamNames.ROLE);
 
-        PageEnum replyPage = PageEnum.ERROR;
+        PageEnum replyPage = null;
 
         if (RoleEnum.GUEST.getRole().equals(role)) {
             replyPage = PageEnum.LOGIN;

@@ -1,6 +1,7 @@
 package by.training.provider.command.impl.admin;
 
 import by.training.provider.command.Command;
+import by.training.provider.command.ParamNames;
 import by.training.provider.command.enums.PageEnum;
 import by.training.provider.dao.exception.DataException;
 import by.training.provider.dto.PageResponse;
@@ -21,7 +22,7 @@ public class SetUserCommand implements Command {
     @Override
     public PageResponse execute(HttpServletRequest request) {
 
-        String customerIdStr = request.getParameter("customerToApprove");
+        String customerIdStr = request.getParameter(ParamNames.CUSTOMER_TO_APPROVE);
         Integer customerId = Integer.valueOf(customerIdStr);
         Customer customer;
         try {
@@ -30,7 +31,7 @@ public class SetUserCommand implements Command {
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
         }
 
-        request.setAttribute("customer", customer);
+        request.setAttribute(ParamNames.CUSTOMER, customer);
 
         return new PageResponse(ResponseMethod.FORWARD, PageEnum.SET_USER);
     }

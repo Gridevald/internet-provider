@@ -9,6 +9,6 @@ public class PaymentValidator {
     public static boolean isValidPayment(Payment payment) {
 
         BigDecimal sum = payment.getSum();
-        return sum.compareTo(BigDecimal.ZERO) <= 0;
+        return sum.compareTo(BigDecimal.ZERO) > 0;
     }
 }

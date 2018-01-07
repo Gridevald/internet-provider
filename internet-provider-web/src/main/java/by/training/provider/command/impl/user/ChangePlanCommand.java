@@ -22,7 +22,7 @@ public class ChangePlanCommand implements Command {
     @Override
     public PageResponse execute(HttpServletRequest request) {
 
-        String planIdToSetStr = request.getParameter("planToSet");
+        String planIdToSetStr = request.getParameter(ParamNames.PLAN_TO_SET);
         Integer planToSet = Integer.valueOf(planIdToSetStr);
 
         User user = (User) request.getSession().getAttribute(ParamNames.PERSON);

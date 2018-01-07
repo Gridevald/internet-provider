@@ -1,6 +1,7 @@
 package by.training.provider.command.impl;
 
 import by.training.provider.command.Command;
+import by.training.provider.command.ParamNames;
 import by.training.provider.command.enums.PageEnum;
 import by.training.provider.command.enums.RoleEnum;
 import by.training.provider.dto.PageResponse;
@@ -16,8 +17,8 @@ public class LogoutCommand implements Command {
 
         HttpSession session = request.getSession();
 
-        session.setAttribute("role", RoleEnum.GUEST.getRole());
-        session.setAttribute("person", null);
+        session.setAttribute(ParamNames.ROLE, RoleEnum.GUEST.getRole());
+        session.setAttribute(ParamNames.PERSON, null);
 
         return new PageResponse(ResponseMethod.FORWARD, PageEnum.HOME);
     }

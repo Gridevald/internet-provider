@@ -26,5 +26,19 @@ public class ParamNames {
     public static final String BUILDING = "building";
     public static final String APARTMENTS = "apartments";
     public static final String SELECT_PLAN = "selectPlan";
-
+    public static final String LANG_TO_SET = "langToSet";
+    public static final String UI_LANG = "uiLang";
+    public static final String PLAN_TO_SET = "planToSet";
+    public static final String SUM = "sum";
+    public static final String SUM_ERROR = "sumError";
+    public static final String CUSTOMER_TO_APPROVE = "customerToApprove";
+    public static final String CUSTOMER = "customer";
+    public static final String NAME = "name";
+    public static final String DESCRIPTION = "description";
+    public static final String DOWNLOAD_SPEED = "downloadSpeed";
+    public static final String UPLOAD_SPEED = "uploadSpeed";
+    public static final String PRICE = "price";
+    public static final String PLAN_ERROR = "planError";
+    public static final String CONTRACT_ERROR = "contractError";
+    public static final String CONTRACT = "contract";
 }

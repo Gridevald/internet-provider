@@ -1,6 +1,7 @@
 package by.training.provider.command.impl.user;
 
 import by.training.provider.command.Command;
+import by.training.provider.command.ParamNames;
 import by.training.provider.command.enums.PageEnum;
 import by.training.provider.dao.exception.DataException;
 import by.training.provider.dto.PageResponse;
@@ -29,7 +30,7 @@ public class ChoosePlanCommand implements Command {
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
         }
 
-        request.setAttribute("planList", planList);
+        request.setAttribute(ParamNames.PLAN_LIST, planList);
 
         return new PageResponse(ResponseMethod.FORWARD, PageEnum.CHOOSE_PLAN);
     }

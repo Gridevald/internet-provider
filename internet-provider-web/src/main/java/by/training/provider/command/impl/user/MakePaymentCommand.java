@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 
 public class MakePaymentCommand implements Command {
 
+    private static final int ERROR_OCCURS = 1;
     private UserService userService;
     private PaymentService paymentService;
 
@@ -33,7 +34,7 @@ public class MakePaymentCommand implements Command {
         HttpSession session = request.getSession();
 
         User user = (User) session.getAttribute(ParamNames.PERSON);
-        String addSumStr = request.getParameter("sum");
+        String addSumStr = request.getParameter(ParamNames.SUM);
         BigDecimal balance = user.getBalance();
         BigDecimal addSum = new BigDecimal(addSumStr);
         balance = balance.add(addSum);
@@ -45,17 +46,17 @@ public class MakePaymentCommand implements Command {
         Integer userId = user.getId();
         payment.setUserId(userId);
 
-        if (PaymentValidator.isValidPayment(payment)) {
-            try {
-                userService.updateUser(user);
-                paymentService.addPayment(payment);
-            } catch (DataException e) {
-                return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
-            }
-            return new PageResponse(ResponseMethod.REDIRECT, PageEnum.SUCCESS_USER_ACTION_COMMAND);
+        if (!PaymentValidator.isValidPayment(payment)) {
+            request.setAttribute(ParamNames.SUM_ERROR, ERROR_OCCURS);
+            return new PageResponse(ResponseMethod.FORWARD, PageEnum.SET_PAYMENT);
         }
 
-        request.setAttribute("sumError", 1);
-        return new PageResponse(ResponseMethod.FORWARD, PageEnum.SET_PAYMENT);
+        try {
+            userService.updateUser(user);
+            paymentService.addPayment(payment);
+        } catch (DataException e) {
+            return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
+        }
+        return new PageResponse(ResponseMethod.REDIRECT, PageEnum.SUCCESS_USER_ACTION_COMMAND);
     }
 }
