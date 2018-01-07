@@ -1,0 +1,101 @@
+/* horizontal button group */
+.btn-group .button {
+    background-color: #99dfff;
+    border: 1px solid #005780;
+    color: #005780;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 1em;
+    border-radius: 0;
+    display: inline-block;
+    float: left;
+}
+
+.btn-group .button:not(:last-child) {
+    border-right: none;
+}
+
+.button:hover {
+    background-color: #00aeff;
+    color: #e6f7ff;
+    cursor: pointer;
+}
+
+.btn-group .button:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+
+.btn-group .button:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.btn-group .button:only-child {
+    border-radius: 8px;
+    margin-left: 0;
+}
+
+.button {
+    background-color: #99dfff;
+    border: 1px solid #005780;
+    border-radius: 8px;
+    color: #005780;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 1em;
+}
+
+.button.active {
+    background-color: #00aeff;
+    color: #e6f7ff;
+}
+
+/* vertical button group */
+.vert-btn-group .button {
+    width: 200px;
+    float: none;
+    display: block;
+}
+
+.vert-btn-group .button:not(:last-child) {
+    border-right: 1px solid #005780;
+    border-bottom: none;
+}
+  
+.vert-btn-group .button:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+
+.vert-btn-group .button:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+/* horizontal -> vertical on mobile and screen width lt 650px */
+@media
+(max-width: 650px) {
+
+    .btn-group .button {
+        width: 200px;
+        float: none;
+        display: block;
+    }
+    
+    .btn-group .button:not(:last-child) {
+        border-right: 1px solid #005780;
+        border-bottom: none;
+    }
+  
+    .btn-group .button:first-child {
+        border-radius: 8px 8px 0 0;
+    }
+
+
+    .btn-group .button:last-child {
+        border-radius: 0 0 8px 8px;
+    }
+}

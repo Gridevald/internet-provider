@@ -1,0 +1,7 @@
+.input-field:invalid {
+    color: #ff0080;
+}
+
+.input-field:valid {
+    color: #3ec04dff;
+}

@@ -1,0 +1,30 @@
+.container {
+    border: 1px solid #005780;
+    border-radius: 20px;
+    background-color: #cceeff;
+    padding: 20px;
+    width: 400px;
+    margin: auto;
+}
+
+.form, td{
+    padding: 10px;
+    margin: 10px;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+.error {
+    color: #ff0080;
+}
+
+.input-field {
+    background-color: #e6f7ff;
+    border: 1px solid #005780;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+textarea {
+    resize: none;
+}

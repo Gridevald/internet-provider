@@ -1,0 +1,36 @@
+package by.training.provider.filter;
+
+import javax.servlet.*;
+import java.io.IOException;
+
+public class EncodingFilter implements Filter {
+
+    private String code;
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+        code = filterConfig.getInitParameter("encoding");
+    }
+
+    @Override
+    public void doFilter(ServletRequest request,
+                         ServletResponse response,
+                         FilterChain chain)
+            throws IOException, ServletException {
+
+        String requestCode = request.getCharacterEncoding();
+
+        if (code != null && !code.equalsIgnoreCase(requestCode)) {
+            request.setCharacterEncoding(code);
+            response.setCharacterEncoding(code);
+        }
+
+        chain.doFilter(request, response);
+
+    }
+
+    @Override
+    public void destroy() {
+        code = null;
+    }
+}
