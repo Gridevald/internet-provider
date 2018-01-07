@@ -8,11 +8,14 @@ import by.training.provider.dto.PageResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.User;
 import by.training.provider.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class ChangePlanCommand implements Command {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private UserService service;
 
     public ChangePlanCommand(UserService service) {
@@ -31,6 +34,7 @@ public class ChangePlanCommand implements Command {
         try {
             service.updateUser(user);
         } catch (DataException e) {
+            LOGGER.error(e.getMessage());
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
         }
 

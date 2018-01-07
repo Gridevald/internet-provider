@@ -12,12 +12,15 @@ import by.training.provider.entity.User;
 import by.training.provider.service.CustomerService;
 import by.training.provider.service.PlanService;
 import by.training.provider.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class SuccessAdminActionCommand implements Command {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private UserService userService;
     private PlanService planService;
     private CustomerService customerService;
@@ -44,6 +47,7 @@ public class SuccessAdminActionCommand implements Command {
             List<Customer> customerList = customerService.getAllCustomersWithPlan();
             request.setAttribute(ParamNames.CUSTOMER_LIST, customerList);
         } catch (DataException e) {
+            LOGGER.error(e.getMessage());
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
         }
 

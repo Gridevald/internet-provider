@@ -11,6 +11,8 @@ import by.training.provider.dto.PageResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.*;
 import by.training.provider.service.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +20,7 @@ import java.util.List;
 
 public class MainCommand implements Command {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final int WRONG_PASSWORD_CODE = 1;
     private static final int NOT_REGISTERED_CODE = 2;
     private static final int NOT_ACTIVE_CODE = 3;
@@ -71,6 +74,7 @@ public class MainCommand implements Command {
                 return new CustomerHandleRequest().handle(request, email);
             }
         } catch (DataException e) {
+            LOGGER.error(e.getMessage());
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
         } catch (InvalidPasswordException e1) {
             return handlePasswordException(request);

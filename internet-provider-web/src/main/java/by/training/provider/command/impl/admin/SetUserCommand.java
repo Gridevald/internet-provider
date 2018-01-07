@@ -8,11 +8,14 @@ import by.training.provider.dto.PageResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Customer;
 import by.training.provider.service.CustomerService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class SetUserCommand implements Command {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private CustomerService service;
 
     public SetUserCommand(CustomerService service) {
@@ -28,6 +31,7 @@ public class SetUserCommand implements Command {
         try {
             customer = service.getEagerCustomerById(customerId);
         } catch (DataException e) {
+            LOGGER.error(e.getMessage());
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
         }
 

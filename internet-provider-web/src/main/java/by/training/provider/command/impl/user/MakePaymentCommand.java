@@ -11,6 +11,8 @@ import by.training.provider.entity.Payment;
 import by.training.provider.entity.User;
 import by.training.provider.service.PaymentService;
 import by.training.provider.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +20,7 @@ import java.math.BigDecimal;
 
 public class MakePaymentCommand implements Command {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final int ERROR_OCCURS = 1;
     private UserService userService;
     private PaymentService paymentService;
@@ -55,6 +58,7 @@ public class MakePaymentCommand implements Command {
             userService.updateUser(user);
             paymentService.addPayment(payment);
         } catch (DataException e) {
+            LOGGER.error(e.getMessage());
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
         }
         return new PageResponse(ResponseMethod.REDIRECT, PageEnum.SUCCESS_USER_ACTION_COMMAND);

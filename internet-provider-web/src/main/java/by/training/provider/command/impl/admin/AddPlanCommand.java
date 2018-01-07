@@ -9,12 +9,15 @@ import by.training.provider.dto.PageResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Plan;
 import by.training.provider.service.PlanService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
 public class AddPlanCommand implements Command {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private PlanService service;
 
     public AddPlanCommand(PlanService service) {
@@ -48,6 +51,7 @@ public class AddPlanCommand implements Command {
             try {
                 service.inserPlan(plan);
             } catch (DataException e) {
+                LOGGER.error(e.getMessage());
                 return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
             }
         } else {

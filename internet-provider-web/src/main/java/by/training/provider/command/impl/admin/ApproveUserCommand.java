@@ -10,11 +10,14 @@ import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Customer;
 import by.training.provider.service.ApproveUserService;
 import by.training.provider.service.CustomerService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class ApproveUserCommand implements Command {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private ApproveUserService approveUserService;
     private CustomerService customerService;
 
@@ -34,6 +37,7 @@ public class ApproveUserCommand implements Command {
         try {
             customer = customerService.getEagerCustomerById(customerId);
         } catch (DataException e) {
+            LOGGER.error(e.getMessage());
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
         }
 
@@ -44,6 +48,7 @@ public class ApproveUserCommand implements Command {
             try {
                 approveUserService.moveCustomerToUser(customer, contract);
             } catch (DataException e) {
+                LOGGER.error(e.getMessage());
                 return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
             }
         } else {

@@ -13,12 +13,15 @@ import by.training.provider.entity.Plan;
 import by.training.provider.service.CustomerService;
 import by.training.provider.service.PlanService;
 import by.training.provider.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class MakeOrderCommand implements Command {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final int PASS_NOT_EQUALS_CODE = 1;
     private static final int EMAIL_CODE = 2;
     private CustomerService customerService;
@@ -82,6 +85,7 @@ public class MakeOrderCommand implements Command {
                 return handleWithError(EMAIL_CODE, request);
             }
         } catch (DataException e) {
+            LOGGER.error(e.getMessage());
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
         }
 
@@ -93,6 +97,7 @@ public class MakeOrderCommand implements Command {
         try {
             planList = planService.getAllPlans();
         } catch (DataException e) {
+            LOGGER.error(e.getMessage());
             return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
         }
 
