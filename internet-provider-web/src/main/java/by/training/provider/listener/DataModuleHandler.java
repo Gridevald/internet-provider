@@ -1,7 +1,6 @@
 package by.training.provider.listener;
 
 import by.training.provider.pool.ConnectionPool;
-import by.training.provider.pool.exception.PoolException;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

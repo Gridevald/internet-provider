@@ -39,7 +39,8 @@ public class PlanService {
         Plan plan;
         try {
             plan = dao.getById(id);
-        } catch (DataException e) {
+            connection.commit();
+        } catch (SQLException | DataException e) {
             throw new DataException(e.getMessage(), e.getCause());
         } finally {
             pool.recycleConnection(connection);
@@ -48,7 +49,7 @@ public class PlanService {
         return plan;
     }
 
-    public void inserPlan(Plan plan) throws DataException {
+    public void insertPlan(Plan plan) throws DataException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 

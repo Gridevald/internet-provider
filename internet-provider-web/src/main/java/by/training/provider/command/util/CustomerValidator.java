@@ -2,7 +2,6 @@ package by.training.provider.command.util;
 
 import by.training.provider.dao.exception.DataException;
 import by.training.provider.entity.Customer;
-import by.training.provider.entity.User;
 import by.training.provider.service.UserService;
 
 import java.util.regex.Matcher;

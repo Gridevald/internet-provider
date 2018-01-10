@@ -10,7 +10,7 @@ public class DbConfigReader {
 
     private static final String CONFIG = "dbInfo.properties";
 
-    public DbConfig readProperties() throws LoaderException{
+    public DbConfig readProperties() {
         ClassLoader classLoader = DbConfigReader.class.getClassLoader();
         InputStream propStream = classLoader.getResourceAsStream(CONFIG);
         if (propStream == null) {

@@ -47,7 +47,7 @@ public class AddPlanCommandTest {
 
     @Test
     public void shouldReturnRedirectSuccessAdminWhenValidData() throws DataException {
-        doNothing().when(service).inserPlan(any());
+        doNothing().when(service).insertPlan(any());
 
         PageResponse response = command.execute(request);
 
@@ -67,7 +67,7 @@ public class AddPlanCommandTest {
 
     @Test
     public void shouldReturnForwardErrorWhenDataException() throws DataException {
-        doThrow(new DataException()).when(service).inserPlan(any());
+        doThrow(new DataException()).when(service).insertPlan(any());
 
         PageResponse response = command.execute(request);
 

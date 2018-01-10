@@ -2,7 +2,6 @@ package by.training.provider.service;
 
 import by.training.provider.dao.exception.DataException;
 import by.training.provider.dao.impl.CustomerDao;
-import by.training.provider.dao.impl.PlanDao;
 import by.training.provider.entity.Customer;
 import by.training.provider.entity.Person;
 import by.training.provider.entity.Plan;

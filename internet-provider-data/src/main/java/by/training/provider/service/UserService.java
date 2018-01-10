@@ -1,14 +1,10 @@
 package by.training.provider.service;
 
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dao.impl.PaymentDao;
-import by.training.provider.dao.impl.PlanDao;
-import by.training.provider.dao.impl.TrafficDao;
 import by.training.provider.dao.impl.UserDao;
 import by.training.provider.entity.*;
 import by.training.provider.pool.ConnectionPool;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -44,12 +40,7 @@ public class UserService implements PersonService {
     }
 
     public User getEagerUser(Integer id) throws DataException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
-
-        UserDao userDao = new UserDao(connection);
-
-        User user = userDao.getById(id);
+        User user = getUserById(id);
 
         PlanService planService = new PlanService();
         Integer planId = user.getPlanId();
@@ -65,14 +56,6 @@ public class UserService implements PersonService {
         PaymentService paymentService = new PaymentService();
         List<Payment> paymentList = paymentService.getPaymentsByUserId(userId);
         user.setPaymentList(paymentList);
-
-        try {
-            connection.commit();
-        } catch (SQLException e) {
-            throw new DataException(e.getMessage(), e.getCause());
-        } finally {
-            pool.recycleConnection(connection);
-        }
 
         return user;
     }

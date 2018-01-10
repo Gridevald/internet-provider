@@ -60,7 +60,7 @@ public class ConnectionPool {
     public Connection getConnection() {
         try {
             Connection connection = POOL.take();
-            if (!connection.isValid(0)) {
+            if (!connection.isValid(1)) {
                 connection = creator.getConnection();
             }
             return connection;
@@ -71,7 +71,7 @@ public class ConnectionPool {
 
     public void recycleConnection(Connection connection) {
         try {
-            if (connection == null || !connection.isValid(0)) {
+            if (connection == null || !connection.isValid(1)) {
                 connection = creator.getConnection();
             }
             POOL.put(connection);

@@ -49,7 +49,7 @@ public class AddPlanCommand implements Command {
 
         if (PlanValidator.isValidPlan(plan)) {
             try {
-                service.inserPlan(plan);
+                service.insertPlan(plan);
             } catch (DataException e) {
                 LOGGER.error(e.getMessage());
                 return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);

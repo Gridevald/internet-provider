@@ -7,11 +7,13 @@ import java.io.IOException;
 
 public class LanguageFilter implements Filter {
 
+    private static final String LANG = "lang";
+    private static final String UI_LANG = "uiLang";
     private String language;
 
     @Override
     public void init(FilterConfig filterConfig) {
-        language = filterConfig.getInitParameter("lang");
+        language = filterConfig.getInitParameter(LANG);
     }
 
     @Override
@@ -23,10 +25,10 @@ public class LanguageFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
         HttpSession session = httpRequest.getSession();
-        String uiLang = (String) session.getAttribute("uiLang");
+        String uiLang = (String) session.getAttribute(UI_LANG);
 
         if (uiLang == null) {
-            session.setAttribute("uiLang", language);
+            session.setAttribute(UI_LANG, language);
         }
 
         chain.doFilter(httpRequest, response);
