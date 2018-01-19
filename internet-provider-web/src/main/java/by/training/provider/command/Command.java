@@ -1,10 +1,14 @@
 package by.training.provider.command;
 
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Command executes appropriate actions and returns url
+ * to forward/redirect.
+ */
 public interface Command {
 
-    PageResponse execute(HttpServletRequest request);
+    UrlResponse execute(HttpServletRequest request);
 }

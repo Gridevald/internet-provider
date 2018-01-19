@@ -1,7 +1,7 @@
 package by.training.provider.filter;
 
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.enums.RoleEnum;
 
 import javax.servlet.*;
@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class AdminAccessFilter implements Filter{
+/**
+ * Redirects to login page if role is not 'admin' and
+ * visitor tying to access admin pages.
+ */
+public class AdminAccessFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -30,7 +34,7 @@ public class AdminAccessFilter implements Filter{
         if (!role.equals(RoleEnum.ADMIN.getRole())) {
             String contextPath = httpRequest.getContextPath();
             HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.sendRedirect(contextPath + PageEnum.LOGIN_COMMAND.getPage());
+            httpResponse.sendRedirect(contextPath + UrlEnum.LOGIN_COMMAND.getPage());
         } else {
             chain.doFilter(request, response);
         }

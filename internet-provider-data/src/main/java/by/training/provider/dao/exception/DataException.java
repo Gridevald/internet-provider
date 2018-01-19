@@ -1,5 +1,9 @@
 package by.training.provider.dao.exception;
 
+/**
+ * Exception for data module. Should be passed to web module
+ * instead of another exceptions.
+ */
 public class DataException extends Exception {
 
     public DataException() {

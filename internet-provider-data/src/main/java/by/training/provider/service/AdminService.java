@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AdminService implements PersonService {
 
-    public Admin getByUnique(String email) throws DataException {
+    public Admin getAdminByEmail(String email) throws DataException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
@@ -42,6 +42,6 @@ public class AdminService implements PersonService {
 
     @Override
     public Person getPersonByEmail(String email) throws DataException {
-        return getByUnique(email);
+        return getAdminByEmail(email);
     }
 }

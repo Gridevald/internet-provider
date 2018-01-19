@@ -1,6 +1,6 @@
 package by.training.provider.command.enums;
 
-public enum PageEnum {
+public enum UrlEnum {
     ADMIN("/WEB-INF/jsp/admin/admin.jsp"),
     CHOOSE_PLAN("/WEB-INF/jsp/user/choosePlan.jsp"),
     ERROR("/WEB-INF/jsp/error.jsp"),
@@ -18,7 +18,7 @@ public enum PageEnum {
     SUCCESS_USER_ACTION_COMMAND("/user/successUserAction.do"),
     USER("/WEB-INF/jsp/user/user.jsp");
 
-    PageEnum(String page) {
+    UrlEnum(String page) {
         this.page = page;
     }
 

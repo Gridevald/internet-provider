@@ -1,8 +1,8 @@
 package by.training.provider.command.impl;
 
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.service.PlanService;
 import org.junit.Assert;
@@ -28,18 +28,18 @@ public class RegisterCommandTest {
 
     @Test
     public void shouldReturnForwardPlans() {
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.REGISTER, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.REGISTER, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardErrorWhenDataError() throws DataException {
         when(service.getAllPlans()).thenThrow(new DataException());
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 }

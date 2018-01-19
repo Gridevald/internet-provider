@@ -2,9 +2,9 @@ package by.training.provider.command.impl.admin;
 
 import by.training.provider.command.Command;
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Customer;
 import by.training.provider.service.CustomerService;
@@ -22,8 +22,14 @@ public class SetUserCommand implements Command {
         this.service = service;
     }
 
+    /**
+     * Returns set user page url.
+     *
+     * @param request HttpServletRequest.
+     * @return UrlResponse.
+     */
     @Override
-    public PageResponse execute(HttpServletRequest request) {
+    public UrlResponse execute(HttpServletRequest request) {
 
         String customerIdStr = request.getParameter(ParamNames.CUSTOMER_TO_APPROVE);
         Integer customerId = Integer.valueOf(customerIdStr);
@@ -32,11 +38,11 @@ public class SetUserCommand implements Command {
             customer = service.getEagerCustomerById(customerId);
         } catch (DataException e) {
             LOGGER.error(e.getMessage());
-            return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
+            return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.ERROR);
         }
 
         request.setAttribute(ParamNames.CUSTOMER, customer);
 
-        return new PageResponse(ResponseMethod.FORWARD, PageEnum.SET_USER);
+        return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.SET_USER);
     }
 }

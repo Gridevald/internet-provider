@@ -2,10 +2,10 @@ package by.training.provider.command.impl.admin;
 
 import by.training.provider.command.Command;
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.util.PlanValidator;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Plan;
 import by.training.provider.service.PlanService;
@@ -18,14 +18,21 @@ import java.math.BigDecimal;
 public class AddPlanCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final int ERROR_FLAG = 1;
     private PlanService service;
 
     public AddPlanCommand(PlanService service) {
         this.service = service;
     }
 
+    /**
+     * Adds new plan and returns success admin action command url.
+     *
+     * @param request HttpServletRequest.
+     * @return UrlResponse.
+     */
     @Override
-    public PageResponse execute(HttpServletRequest request) {
+    public UrlResponse execute(HttpServletRequest request) {
 
         Plan plan = new Plan();
 
@@ -52,13 +59,13 @@ public class AddPlanCommand implements Command {
                 service.insertPlan(plan);
             } catch (DataException e) {
                 LOGGER.error(e.getMessage());
-                return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
+                return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.ERROR);
             }
         } else {
-            request.setAttribute(ParamNames.PLAN_ERROR, 1);
-            return new PageResponse(ResponseMethod.FORWARD, PageEnum.SET_PLAN);
+            request.setAttribute(ParamNames.PLAN_ERROR, ERROR_FLAG);
+            return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.SET_PLAN);
         }
 
-        return new PageResponse(ResponseMethod.REDIRECT, PageEnum.SUCCESS_ADMIN_ACTION_COMMAND);
+        return new UrlResponse(ResponseMethod.REDIRECT, UrlEnum.SUCCESS_ADMIN_ACTION_COMMAND);
     }
 }

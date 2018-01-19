@@ -1,9 +1,9 @@
 package by.training.provider.command.impl.user;
 
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.User;
 import by.training.provider.service.UserService;
@@ -44,19 +44,19 @@ public class ChangePlanCommandTest {
 
     @Test
     public void shouldReturnRedirectSuccessUserWhenNoException() {
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.REDIRECT, response.getMethod());
-        Assert.assertEquals(PageEnum.SUCCESS_USER_ACTION_COMMAND, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SUCCESS_USER_ACTION_COMMAND, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardErrorWhenDataException() throws DataException {
         doThrow(new DataException()).when(service).updateUser(USER);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 }

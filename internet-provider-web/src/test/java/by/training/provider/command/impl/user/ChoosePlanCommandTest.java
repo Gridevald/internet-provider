@@ -1,8 +1,8 @@
 package by.training.provider.command.impl.user;
 
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.service.PlanService;
 import org.junit.Assert;
@@ -28,19 +28,19 @@ public class ChoosePlanCommandTest {
 
     @Test
     public void shouldReturnForwardChoosePlanWhenNoExceptions() {
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.CHOOSE_PLAN, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.CHOOSE_PLAN, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardErrorWhenDataException() throws DataException {
         when(service.getAllPlans()).thenThrow(new DataException());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 }

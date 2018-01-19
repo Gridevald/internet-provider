@@ -13,7 +13,14 @@ import java.util.List;
 
 public class CustomerService implements PersonService {
 
-    public Customer getByUnique(String email) throws DataException {
+    /**
+     * Get customer excluding Plan object.
+     *
+     * @param email customer email.
+     * @return Customer.
+     * @throws DataException
+     */
+    public Customer getCustomerByEmail(String email) throws DataException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
@@ -63,6 +70,12 @@ public class CustomerService implements PersonService {
         }
     }
 
+    /**
+     * Get customer excluding Plan object.
+     *
+     * @return List of Customers.
+     * @throws DataException
+     */
     public List<Customer> getAllCustomers() throws DataException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -82,6 +95,12 @@ public class CustomerService implements PersonService {
         return customerList;
     }
 
+    /**
+     * Get customer including Plan object.
+     *
+     * @return List of Customers.
+     * @throws DataException
+     */
     public List<Customer> getAllCustomersWithPlan() throws DataException {
         List<Customer> customerList = getAllCustomers();
 
@@ -89,13 +108,20 @@ public class CustomerService implements PersonService {
 
         for (Customer customer : customerList) {
             Integer planId = customer.getPlanId();
-            Plan plan = planService.getById(planId);
+            Plan plan = planService.getPlanById(planId);
             customer.setPlan(plan);
         }
 
         return customerList;
     }
 
+    /**
+     * Get customer including Plan object.
+     *
+     * @param id customer id.
+     * @return Customer.
+     * @throws DataException
+     */
     public Customer getEagerCustomerById(Integer id) throws DataException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -115,7 +141,7 @@ public class CustomerService implements PersonService {
         PlanService planService = new PlanService();
 
         Integer planId = customer.getPlanId();
-        Plan plan = planService.getById(planId);
+        Plan plan = planService.getPlanById(planId);
         customer.setPlan(plan);
 
         return customer;
@@ -123,6 +149,6 @@ public class CustomerService implements PersonService {
 
     @Override
     public Person getPersonByEmail(String email) throws DataException {
-        return getByUnique(email);
+        return getCustomerByEmail(email);
     }
 }

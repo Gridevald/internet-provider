@@ -1,8 +1,8 @@
 package by.training.provider.command.impl.admin;
 
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.service.CustomerService;
 import by.training.provider.service.PlanService;
@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.mockito.Mockito.when;
 
@@ -36,43 +36,43 @@ public class SuccessAdminActionCommandTest {
 
     @Before
     public void setup() throws DataException {
-        when(userService.getAllUsersWithPlan()).thenReturn(new ArrayList<>());
-        when(planService.getAllPlans()).thenReturn(new ArrayList<>());
-        when(customerService.getAllCustomersWithPlan()).thenReturn(new ArrayList<>());
+        when(userService.getAllUsersWithPlan()).thenReturn(Collections.emptyList());
+        when(planService.getAllPlans()).thenReturn(Collections.emptyList());
+        when(customerService.getAllCustomersWithPlan()).thenReturn(Collections.emptyList());
     }
 
     @Test
     public void shouldReturnForwardAdminWhenValidData() {
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ADMIN, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ADMIN, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardErrorWhenDataExceptionOnUserService() throws DataException {
         when(userService.getAllUsersWithPlan()).thenThrow(new DataException());
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardErrorWhenDataExceptionOnPlanService() throws DataException {
         when(planService.getAllPlans()).thenThrow(new DataException());
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardErrorWhenDataExceptionOnCustomerService() throws DataException {
         when(customerService.getAllCustomersWithPlan()).thenThrow(new DataException());
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 }

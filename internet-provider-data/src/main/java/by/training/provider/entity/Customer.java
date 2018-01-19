@@ -1,5 +1,7 @@
 package by.training.provider.entity;
 
+import java.util.Objects;
+
 public class Customer extends Person {
 
     private String city;
@@ -65,4 +67,42 @@ public class Customer extends Person {
     }
 
     //////////////////////////////////////////////////////////////////////
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Customer)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Customer customer = (Customer) o;
+        return Objects.equals(getCity(), customer.getCity()) &&
+                Objects.equals(getStreet(), customer.getStreet()) &&
+                Objects.equals(getBuilding(), customer.getBuilding()) &&
+                Objects.equals(getApartments(), customer.getApartments()) &&
+                Objects.equals(getPlanId(), customer.getPlanId()) &&
+                Objects.equals(getPlan(), customer.getPlan());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getCity(), getStreet(), getBuilding(),
+                getApartments(), getPlanId(), getPlan());
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", building='" + building + '\'' +
+                ", apartments=" + apartments +
+                ", planId=" + planId +
+                ", plan=" + plan +
+                "super=" + super.toString() + "}";
+    }
 }

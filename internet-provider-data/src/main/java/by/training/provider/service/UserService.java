@@ -11,7 +11,14 @@ import java.util.List;
 
 public class UserService implements PersonService {
 
-    public User getUserByUnique(String email) throws DataException {
+    /**
+     * Get user excluding inner objects.
+     *
+     * @param email user email.
+     * @return User.
+     * @throws DataException
+     */
+    public User getUserByEmail(String email) throws DataException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
@@ -39,12 +46,19 @@ public class UserService implements PersonService {
         return user;
     }
 
+    /**
+     * Get fully constructed User, including all inner objects.
+     *
+     * @param id user id.
+     * @return User.
+     * @throws DataException
+     */
     public User getEagerUser(Integer id) throws DataException {
         User user = getUserById(id);
 
         PlanService planService = new PlanService();
         Integer planId = user.getPlanId();
-        Plan plan = planService.getById(planId);
+        Plan plan = planService.getPlanById(planId);
         user.setPlan(plan);
 
         Integer userId = user.getId();
@@ -81,7 +95,13 @@ public class UserService implements PersonService {
         }
     }
 
-    public List<User> getAllLazyUsers() throws DataException {
+    /**
+     * Get all users excluding inner objects.
+     *
+     * @return List of Users.
+     * @throws DataException
+     */
+    public List<User> getAllUsers() throws DataException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
@@ -100,20 +120,33 @@ public class UserService implements PersonService {
         return userList;
     }
 
+    /**
+     * Get all users including only Plan from inner objects.
+     *
+     * @return List of Users.
+     * @throws DataException
+     */
     public List<User> getAllUsersWithPlan() throws DataException {
-        List<User> userList = getAllLazyUsers();
+        List<User> userList = getAllUsers();
 
         PlanService planService = new PlanService();
 
         for (User user : userList) {
             Integer planId = user.getPlanId();
-            Plan plan = planService.getById(planId);
+            Plan plan = planService.getPlanById(planId);
             user.setPlan(plan);
         }
 
         return userList;
     }
 
+    /**
+     * Get user excluding inner objects.
+     *
+     * @param id user id.
+     * @return User.
+     * @throws DataException
+     */
     public User getUserById(Integer id) throws DataException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -135,11 +168,18 @@ public class UserService implements PersonService {
 
     @Override
     public Person getPersonByEmail(String email) throws DataException {
-        return getUserByUnique(email);
+        return getUserByEmail(email);
     }
 
+    /**
+     * Checks if User with given email already exists.
+     *
+     * @param email user email.
+     * @return true when exists, false otherwise.
+     * @throws DataException
+     */
     public boolean isUserExists(String email) throws DataException {
-        User user = getUserByUnique(email);
+        User user = getUserByEmail(email);
 
         return user != null;
     }

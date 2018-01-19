@@ -1,5 +1,7 @@
 package by.training.provider.entity;
 
+import java.util.Objects;
+
 /**
  * Abstract Person with common fields for all people.
  */
@@ -65,5 +67,42 @@ public abstract class Person implements Identifiable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    //////////////////////////////////////////////////////////////////////
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Person)) {
+            return false;
+        }
+        Person person = (Person) o;
+        return Objects.equals(getId(), person.getId()) &&
+                Objects.equals(getEmail(), person.getEmail()) &&
+                Objects.equals(getPassword(), person.getPassword()) &&
+                Objects.equals(getFirstName(), person.getFirstName()) &&
+                Objects.equals(getMiddleName(), person.getMiddleName()) &&
+                Objects.equals(getLastName(), person.getLastName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getEmail(), getPassword(),
+                getFirstName(), getMiddleName(), getLastName());
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

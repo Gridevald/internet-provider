@@ -1,6 +1,7 @@
 package by.training.provider.entity;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Traffic implements Identifiable {
 
@@ -58,6 +59,27 @@ public class Traffic implements Identifiable {
     }
 
     //////////////////////////////////////////////////////////////////////
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Traffic)) {
+            return false;
+        }
+        Traffic traffic = (Traffic) o;
+        return Objects.equals(getId(), traffic.getId()) &&
+                Objects.equals(getDownloaded(), traffic.getDownloaded()) &&
+                Objects.equals(getUploaded(), traffic.getUploaded()) &&
+                Objects.equals(getDate(), traffic.getDate()) &&
+                Objects.equals(getUserId(), traffic.getUserId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getDownloaded(), getUploaded(), getDate(), getUserId());
+    }
 
     @Override
     public String toString() {

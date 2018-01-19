@@ -1,14 +1,18 @@
 package by.training.provider.filter;
 
+import by.training.provider.command.ParamNames;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Sets UI language to init language if language is not set yet.
+ */
 public class LanguageFilter implements Filter {
 
     private static final String LANG = "lang";
-    private static final String UI_LANG = "uiLang";
     private String language;
 
     @Override
@@ -25,10 +29,10 @@ public class LanguageFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
         HttpSession session = httpRequest.getSession();
-        String uiLang = (String) session.getAttribute(UI_LANG);
+        String uiLang = (String) session.getAttribute(ParamNames.UI_LANG);
 
         if (uiLang == null) {
-            session.setAttribute(UI_LANG, language);
+            session.setAttribute(ParamNames.UI_LANG, language);
         }
 
         chain.doFilter(httpRequest, response);

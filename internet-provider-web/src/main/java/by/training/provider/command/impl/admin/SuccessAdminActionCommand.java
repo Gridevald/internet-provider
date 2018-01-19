@@ -2,9 +2,9 @@ package by.training.provider.command.impl.admin;
 
 import by.training.provider.command.Command;
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Customer;
 import by.training.provider.entity.Plan;
@@ -34,8 +34,14 @@ public class SuccessAdminActionCommand implements Command {
         this.customerService = customerService;
     }
 
+    /**
+     * Sets user list, plan list, customer list and returns admin main page url.
+     *
+     * @param request HttpServletRequest.
+     * @return UrlResponse.
+     */
     @Override
-    public PageResponse execute(HttpServletRequest request) {
+    public UrlResponse execute(HttpServletRequest request) {
 
         try {
             List<User> userList = userService.getAllUsersWithPlan();
@@ -48,9 +54,9 @@ public class SuccessAdminActionCommand implements Command {
             request.setAttribute(ParamNames.CUSTOMER_LIST, customerList);
         } catch (DataException e) {
             LOGGER.error(e.getMessage());
-            return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
+            return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.ERROR);
         }
 
-        return new PageResponse(ResponseMethod.FORWARD, PageEnum.ADMIN);
+        return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.ADMIN);
     }
 }

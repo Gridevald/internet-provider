@@ -2,9 +2,9 @@ package by.training.provider.command.impl;
 
 import by.training.provider.command.Command;
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Plan;
 import by.training.provider.service.PlanService;
@@ -23,19 +23,25 @@ public class PlansCommand implements Command {
         this.service = service;
     }
 
+    /**
+     * Sets plan list to request and returns plans page url.
+     *
+     * @param request HttpServletRequest.
+     * @return UrlResponse.
+     */
     @Override
-    public PageResponse execute(HttpServletRequest request) {
+    public UrlResponse execute(HttpServletRequest request) {
 
         List<Plan> planList;
         try {
             planList = service.getAllPlans();
         } catch (DataException e) {
             LOGGER.error(e.getMessage());
-            return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
+            return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.ERROR);
         }
 
         request.setAttribute(ParamNames.PLAN_LIST, planList);
 
-        return new PageResponse(ResponseMethod.FORWARD, PageEnum.PLANS);
+        return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.PLANS);
     }
 }

@@ -2,7 +2,7 @@ package by.training.provider.controller;
 
 import by.training.provider.command.Command;
 import by.training.provider.command.CommandFactory;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 
 import javax.servlet.ServletException;
@@ -29,6 +29,15 @@ public class FrontServlet extends HttpServlet {
         doCommand(request, response);
     }
 
+    /**
+     * Reads request URL, finds appropriate command and executes
+     * page response (response URL and response method).
+     *
+     * @param request HttpRequest.
+     * @param response HttpResponse.
+     * @throws ServletException if an input or output error occurred.
+     * @throws IOException if request cannot be handled.
+     */
     private void doCommand(HttpServletRequest request,
                            HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,15 +47,15 @@ public class FrontServlet extends HttpServlet {
         CommandFactory factory = new CommandFactory();
         Command currentCommand = factory.getAction(actionName);
 
-        PageResponse data = currentCommand.execute(request);
+        UrlResponse data = currentCommand.execute(request);
         ResponseMethod method = data.getMethod();
-        String pageUrl = data.getPageUrl().getPage();
+        String url = data.getUrl().getPage();
 
         if (ResponseMethod.FORWARD.equals(method)) {
-            request.getRequestDispatcher(pageUrl).forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         } else {
             String contextPath = request.getContextPath();
-            response.sendRedirect(contextPath + pageUrl);
+            response.sendRedirect(contextPath + url);
         }
     }
 }

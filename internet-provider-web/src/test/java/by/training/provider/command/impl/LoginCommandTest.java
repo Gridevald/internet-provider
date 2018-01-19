@@ -2,9 +2,9 @@ package by.training.provider.command.impl;
 
 
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.enums.RoleEnum;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,10 +36,10 @@ public class LoginCommandTest {
         when(session.getAttribute(ParamNames.ROLE)).thenReturn(RoleEnum.GUEST.getRole());
 
         LoginCommand command = new LoginCommand();
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.LOGIN, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.LOGIN, response.getUrl());
     }
 
     @Test
@@ -47,10 +47,10 @@ public class LoginCommandTest {
         when(session.getAttribute(ParamNames.ROLE)).thenReturn(RoleEnum.USER.getRole());
 
         LoginCommand command = new LoginCommand();
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.USER, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.USER, response.getUrl());
     }
 
     @Test
@@ -58,9 +58,9 @@ public class LoginCommandTest {
         when(session.getAttribute(ParamNames.ROLE)).thenReturn(RoleEnum.ADMIN.getRole());
 
         LoginCommand command = new LoginCommand();
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.REDIRECT, response.getMethod());
-        Assert.assertEquals(PageEnum.SUCCESS_ADMIN_ACTION_COMMAND, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SUCCESS_ADMIN_ACTION_COMMAND, response.getUrl());
     }
 }

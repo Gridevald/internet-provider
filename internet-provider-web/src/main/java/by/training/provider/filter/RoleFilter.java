@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Sets role to 'guest' if role is not set yet.
+ */
 public class RoleFilter implements Filter {
 
     @Override

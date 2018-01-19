@@ -1,9 +1,9 @@
 package by.training.provider.command.impl.admin;
 
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.service.PlanService;
 import org.junit.Assert;
@@ -49,29 +49,29 @@ public class AddPlanCommandTest {
     public void shouldReturnRedirectSuccessAdminWhenValidData() throws DataException {
         doNothing().when(service).insertPlan(any());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.REDIRECT, response.getMethod());
-        Assert.assertEquals(PageEnum.SUCCESS_ADMIN_ACTION_COMMAND, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SUCCESS_ADMIN_ACTION_COMMAND, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardSetPlanWhenInvalidData() {
         when(request.getParameter(ParamNames.NAME)).thenReturn(null);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.SET_PLAN, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SET_PLAN, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardErrorWhenDataException() throws DataException {
         doThrow(new DataException()).when(service).insertPlan(any());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 }

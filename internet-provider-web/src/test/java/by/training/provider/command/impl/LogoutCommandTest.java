@@ -1,7 +1,7 @@
 package by.training.provider.command.impl;
 
-import by.training.provider.command.enums.PageEnum;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.command.enums.UrlEnum;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,9 +27,9 @@ public class LogoutCommandTest {
         when(request.getSession()).thenReturn(session);
 
         LogoutCommand command = new LogoutCommand();
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.HOME, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.HOME, response.getUrl());
     }
 }

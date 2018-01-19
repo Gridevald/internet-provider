@@ -2,12 +2,12 @@ package by.training.provider.command.impl;
 
 import by.training.provider.command.Command;
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.enums.RoleEnum;
 import by.training.provider.command.impl.exception.InvalidPasswordException;
 import by.training.provider.command.util.PasswordCoder;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.*;
 import by.training.provider.service.*;
@@ -41,22 +41,31 @@ public class MainCommand implements Command {
         this.planService = planService;
     }
 
+    /**
+     * If visitor's role is not 'guest', then returns appropriate main page url.
+     * Otherwise checks if email and password correct. If so, then returns
+     * appropriate main page url, otherwise returns login page url with error
+     * message.
+     *
+     * @param request HttpServletRequest.
+     * @return UrlResponse.
+     */
     @Override
-    public PageResponse execute(HttpServletRequest request) {
+    public UrlResponse execute(HttpServletRequest request) {
 
         String role = (String) request.getSession().getAttribute(ParamNames.ROLE);
         if (RoleEnum.USER.getRole().equals(role)) {
-            return new PageResponse(ResponseMethod.REDIRECT, PageEnum.SUCCESS_USER_ACTION_COMMAND);
+            return new UrlResponse(ResponseMethod.REDIRECT, UrlEnum.SUCCESS_USER_ACTION_COMMAND);
         }
         if (RoleEnum.ADMIN.getRole().equals(role)) {
-            return new PageResponse(ResponseMethod.REDIRECT, PageEnum.SUCCESS_ADMIN_ACTION_COMMAND);
+            return new UrlResponse(ResponseMethod.REDIRECT, UrlEnum.SUCCESS_ADMIN_ACTION_COMMAND);
         }
 
         String email = request.getParameter(ParamNames.EMAIL);
         String password = request.getParameter(ParamNames.PASSWORD);
 
         if (email == null || password == null) {
-            return new PageResponse(ResponseMethod.REDIRECT, PageEnum.LOGIN_COMMAND);
+            return new UrlResponse(ResponseMethod.REDIRECT, UrlEnum.LOGIN_COMMAND);
         }
 
         String passwordHash = PasswordCoder.hashSha(password);
@@ -75,15 +84,26 @@ public class MainCommand implements Command {
             }
         } catch (DataException e) {
             LOGGER.error(e.getMessage());
-            return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
+            return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.ERROR);
         } catch (InvalidPasswordException e1) {
             return handlePasswordException(request);
         }
 
         request.setAttribute(ParamNames.LOGIN_ERROR, NOT_REGISTERED_CODE);
-        return new PageResponse(ResponseMethod.FORWARD, PageEnum.LOGIN);
+        return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.LOGIN);
     }
 
+    /**
+     * Checks if person with given email and password exists.
+     *
+     * @param service Service according to role.
+     * @param email to find.
+     * @param password to check.
+     * @return true when person with given email exists, false otherwise.
+     * @throws DataException when exception occurred on service execution.
+     * @throws InvalidPasswordException when given password not equals to
+     * password in DB.
+     */
     private boolean isPersonExists(PersonService service, String email, String password)
             throws DataException, InvalidPasswordException {
 
@@ -98,22 +118,36 @@ public class MainCommand implements Command {
         return false;
     }
 
-    private PageResponse handlePasswordException(HttpServletRequest request) {
+    /**
+     * Returns login page url if incorrect password.
+     *
+     * @param request HttpServletRequest.
+     * @return UrlResponse.
+     */
+    private UrlResponse handlePasswordException(HttpServletRequest request) {
         request.setAttribute(ParamNames.LOGIN_ERROR, WRONG_PASSWORD_CODE);
-        return new PageResponse(ResponseMethod.FORWARD, PageEnum.LOGIN);
+        return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.LOGIN);
     }
 
+    /**
+     * Person handler. Executes when person exists.
+     */
     private interface HandleRequest {
-        PageResponse handle(HttpServletRequest request, String email) throws DataException;
+        UrlResponse handle(HttpServletRequest request, String email) throws DataException;
     }
 
+    /**
+     * Admin handler.
+     * Sets necessary parameters to session and request
+     * and returns admin main page url.
+     */
     private class AdminHandleRequest implements HandleRequest {
 
         @Override
-        public PageResponse handle(HttpServletRequest request, String email)
+        public UrlResponse handle(HttpServletRequest request, String email)
                 throws DataException {
 
-            Admin admin = adminService.getByUnique(email);
+            Admin admin = adminService.getAdminByEmail(email);
 
             HttpSession session = request.getSession();
 
@@ -129,17 +163,21 @@ public class MainCommand implements Command {
             List<Customer> customerList = customerService.getAllCustomersWithPlan();
             request.setAttribute(ParamNames.CUSTOMER_LIST, customerList);
 
-            return new PageResponse(ResponseMethod.FORWARD, PageEnum.ADMIN);
+            return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.ADMIN);
         }
     }
 
+    /**
+     * User handler.
+     * Sets eager loaded user to session and returns user main page url.
+     */
     private class UserHandleRequest implements HandleRequest {
 
         @Override
-        public PageResponse handle(HttpServletRequest request, String email)
+        public UrlResponse handle(HttpServletRequest request, String email)
                 throws DataException {
 
-            User user = userService.getUserByUnique(email);
+            User user = userService.getUserByEmail(email);
 
             HttpSession session = request.getSession();
 
@@ -150,19 +188,23 @@ public class MainCommand implements Command {
 
             session.setAttribute(ParamNames.PERSON, user);
 
-            return new PageResponse(ResponseMethod.FORWARD, PageEnum.USER);
+            return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.USER);
         }
     }
 
+    /**
+     * Customer handler
+     * Returns login page url with message.
+     */
     private class CustomerHandleRequest implements  HandleRequest {
 
         @Override
-        public PageResponse handle(HttpServletRequest request, String email)
+        public UrlResponse handle(HttpServletRequest request, String email)
                 throws DataException {
 
             request.setAttribute(ParamNames.LOGIN_ERROR, NOT_ACTIVE_CODE);
 
-            return new PageResponse(ResponseMethod.FORWARD, PageEnum.LOGIN);
+            return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.LOGIN);
         }
     }
 }

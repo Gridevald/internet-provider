@@ -3,6 +3,9 @@ package by.training.provider.filter;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * Set encoding to init encoding if its not the same yet.
+ */
 public class EncodingFilter implements Filter {
 
     private static final String ENCODING = "encoding";

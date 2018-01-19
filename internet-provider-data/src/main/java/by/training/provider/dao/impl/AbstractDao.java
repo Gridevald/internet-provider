@@ -27,8 +27,6 @@ public abstract class AbstractDao<T extends Identifiable>
         this.connection = connection;
     }
 
-    //////////////////////////////////////////////////////////////////////
-
     /**
      * Getter for that child classes who need connection in
      * it's own methods.
@@ -128,8 +126,7 @@ public abstract class AbstractDao<T extends Identifiable>
      * @throws DataException when parsing result set or executing query.
      */
     @Override
-    public List<T> getByUniqueParameter(String value)
-            throws DataException {
+    public List<T> getByUniqueParameter(String value) throws DataException {
 
         String query = getUniqueQuery();
 
@@ -152,8 +149,7 @@ public abstract class AbstractDao<T extends Identifiable>
      * @throws DataException when got more than one element by unique ID
      *                      or SQLException occurred while executing query.
      */
-    public T getById(Integer id)
-            throws DataException {
+    public T getById(Integer id) throws DataException {
 
         String query = getWhereIdQuery();
         List<T> elements;
@@ -187,8 +183,7 @@ public abstract class AbstractDao<T extends Identifiable>
      * @return List of T objects
      * @throws DataException when SQLException occurred while executing query.
      */
-    public List<T> getAll()
-            throws DataException {
+    public List<T> getAll() throws DataException {
 
         String query = getSelectQuery();
 

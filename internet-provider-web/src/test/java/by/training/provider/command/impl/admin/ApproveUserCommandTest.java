@@ -1,9 +1,9 @@
 package by.training.provider.command.impl.admin;
 
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.service.ApproveUserService;
 import by.training.provider.service.CustomerService;
@@ -46,37 +46,37 @@ public class ApproveUserCommandTest {
     public void shouldReturnForwardErrorWhenDataExceptionOnCustomerService() throws DataException {
         when(customerService.getEagerCustomerById(any())).thenThrow(new DataException());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardSetUserWhenInvalidContract() {
         when(request.getParameter(ParamNames.CONTRACT)).thenReturn(INVALID_CONTRACT);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.SET_USER, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SET_USER, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardErrorWhenDataExceptionOnApproveService() throws DataException {
         doThrow(new DataException()).when(approveUserService).moveCustomerToUser(any(), any());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 
     @Test
     public void shouldReturnRedirectSuccessAdminWhenValidData() {
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.REDIRECT, response.getMethod());
-        Assert.assertEquals(PageEnum.SUCCESS_ADMIN_ACTION_COMMAND, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SUCCESS_ADMIN_ACTION_COMMAND, response.getUrl());
     }
 }

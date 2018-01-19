@@ -2,6 +2,7 @@ package by.training.provider.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 public class Payment implements Identifiable {
 
@@ -50,6 +51,26 @@ public class Payment implements Identifiable {
     }
 
     //////////////////////////////////////////////////////////////////////
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Payment)) {
+            return false;
+        }
+        Payment payment = (Payment) o;
+        return Objects.equals(getId(), payment.getId()) &&
+                Objects.equals(getSum(), payment.getSum()) &&
+                Objects.equals(getDate(), payment.getDate()) &&
+                Objects.equals(getUserId(), payment.getUserId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getSum(), getDate(), getUserId());
+    }
 
     @Override
     public String toString() {

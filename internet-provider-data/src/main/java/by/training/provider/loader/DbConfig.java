@@ -1,5 +1,8 @@
 package by.training.provider.loader;
 
+/**
+ * Entity with DB configuration options.
+ */
 public class DbConfig {
 
     private String driver;
@@ -7,9 +10,6 @@ public class DbConfig {
     private int poolSize;
     private String user;
     private String password;
-
-    public DbConfig() {
-    }
 
     public String getDriver() {
         return driver;

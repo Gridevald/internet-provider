@@ -10,25 +10,31 @@ public class DbConfigCreator {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
+    /**
+     * Creates DbConfig object.
+     *
+     * @param properties with DB configuration.
+     * @return DbConfig object.
+     */
     public DbConfig create(Properties properties) {
-        DbConfig infoEntity = new DbConfig();
+        DbConfig dbConfig = new DbConfig();
 
         String driver = properties.getProperty(DRIVER);
-        infoEntity.setDriver(driver);
+        dbConfig.setDriver(driver);
 
         String url = properties.getProperty(URL);
-        infoEntity.setUrl(url);
+        dbConfig.setUrl(url);
 
         String poolSizeStr = properties.getProperty(POOL_SIZE);
         int poolSize = Integer.valueOf(poolSizeStr);
-        infoEntity.setPoolSize(poolSize);
+        dbConfig.setPoolSize(poolSize);
 
         String user = properties.getProperty(USER);
-        infoEntity.setUser(user);
+        dbConfig.setUser(user);
 
         String password = properties.getProperty(PASSWORD);
-        infoEntity.setPassword(password);
+        dbConfig.setPassword(password);
 
-        return infoEntity;
+        return dbConfig;
     }
 }

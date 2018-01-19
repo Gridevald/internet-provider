@@ -2,6 +2,7 @@ package by.training.provider.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 public class User extends Person {
 
@@ -114,6 +115,37 @@ public class User extends Person {
 
     //////////////////////////////////////////////////////////////////////
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        User user = (User) o;
+        return Objects.equals(getContract(), user.getContract()) &&
+                Objects.equals(getBalance(), user.getBalance()) &&
+                Objects.equals(getIsBlocked(), user.getIsBlocked()) &&
+                Objects.equals(getCity(), user.getCity()) &&
+                Objects.equals(getStreet(), user.getStreet()) &&
+                Objects.equals(getBuilding(), user.getBuilding()) &&
+                Objects.equals(getApartments(), user.getApartments()) &&
+                Objects.equals(getPlanId(), user.getPlanId()) &&
+                Objects.equals(getPlan(), user.getPlan()) &&
+                Objects.equals(getPaymentList(), user.getPaymentList()) &&
+                Objects.equals(getTrafficList(), user.getTrafficList());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getContract(), getBalance(), getIsBlocked(),
+                getCity(), getStreet(), getBuilding(), getApartments(), getPlanId(),
+                getPlan(), getPaymentList(), getTrafficList());
+    }
 
     @Override
     public String toString() {
@@ -129,6 +161,6 @@ public class User extends Person {
                 ", plan=" + plan +
                 ", paymentList=" + paymentList +
                 ", trafficList=" + trafficList +
-                '}';
+                "super=" + super.toString() + "}";
     }
 }

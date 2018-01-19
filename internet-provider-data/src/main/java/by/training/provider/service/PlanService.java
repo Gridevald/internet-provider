@@ -30,7 +30,7 @@ public class PlanService {
         return planList;
     }
 
-    public Plan getById(Integer id) throws DataException {
+    public Plan getPlanById(Integer id) throws DataException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 

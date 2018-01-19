@@ -1,7 +1,7 @@
 package by.training.provider.command.impl.admin;
 
-import by.training.provider.command.enums.PageEnum;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.command.enums.UrlEnum;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,9 +20,9 @@ public class SetPlanCommandTest {
     @Test
     public void shouldReturnForwardSetPlan() {
         SetPlanCommand command = new SetPlanCommand();
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.SET_PLAN, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SET_PLAN, response.getUrl());
     }
 }

@@ -2,11 +2,11 @@ package by.training.provider.command.impl;
 
 import by.training.provider.command.Command;
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.util.CustomerValidator;
 import by.training.provider.command.util.PasswordCoder;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Customer;
 import by.training.provider.entity.Plan;
@@ -32,8 +32,15 @@ public class MakeOrderCommand implements Command {
         this.planService = planService;
     }
 
+    /**
+     * Validates given data and returns success order command url if data is
+     * correct and register page url otherwise.
+     *
+     * @param request HttpServletRequest.
+     * @return UrlResponse.
+     */
     @Override
-    public PageResponse execute(HttpServletRequest request) {
+    public UrlResponse execute(HttpServletRequest request) {
 
         CustomerValidator validator = new CustomerValidator(new UserService());
 
@@ -86,24 +93,31 @@ public class MakeOrderCommand implements Command {
             }
         } catch (DataException e) {
             LOGGER.error(e.getMessage());
-            return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
+            return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.ERROR);
         }
 
-        return new PageResponse(ResponseMethod.REDIRECT, PageEnum.SUCCESS_ORDER_COMMAND);
+        return new UrlResponse(ResponseMethod.REDIRECT, UrlEnum.SUCCESS_ORDER_COMMAND);
     }
 
-    private PageResponse handleWithError(int errorCode, HttpServletRequest request) {
+    /**
+     * Sets appropriate message and plan list to request.
+     *
+     * @param errorCode code of error to ser
+     * @param request HttpServletRequest.
+     * @return UrlResponse.
+     */
+    private UrlResponse handleWithError(int errorCode, HttpServletRequest request) {
         List<Plan> planList;
         try {
             planList = planService.getAllPlans();
         } catch (DataException e) {
             LOGGER.error(e.getMessage());
-            return new PageResponse(ResponseMethod.FORWARD, PageEnum.ERROR);
+            return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.ERROR);
         }
 
         request.setAttribute(ParamNames.PLAN_LIST, planList);
         request.setAttribute(ParamNames.REGISTER_ERROR, errorCode);
 
-        return new PageResponse(ResponseMethod.FORWARD, PageEnum.REGISTER);
+        return new UrlResponse(ResponseMethod.FORWARD, UrlEnum.REGISTER);
     }
 }

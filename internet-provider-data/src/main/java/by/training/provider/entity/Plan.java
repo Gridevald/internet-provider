@@ -1,6 +1,7 @@
 package by.training.provider.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Plan implements Identifiable {
 
@@ -67,4 +68,39 @@ public class Plan implements Identifiable {
     }
 
     //////////////////////////////////////////////////////////////////////
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Plan)) {
+            return false;
+        }
+        Plan plan = (Plan) o;
+        return Objects.equals(getId(), plan.getId()) &&
+                Objects.equals(getName(), plan.getName()) &&
+                Objects.equals(getDownloadSpeed(), plan.getDownloadSpeed()) &&
+                Objects.equals(getUploadSpeed(), plan.getUploadSpeed()) &&
+                Objects.equals(getPrice(), plan.getPrice()) &&
+                Objects.equals(getDescription(), plan.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getDownloadSpeed(), getUploadSpeed(),
+                getPrice(), getDescription());
+    }
+
+    @Override
+    public String toString() {
+        return "Plan{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", downloadSpeed=" + downloadSpeed +
+                ", uploadSpeed=" + uploadSpeed +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

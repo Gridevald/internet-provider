@@ -1,11 +1,11 @@
 package by.training.provider.command.impl;
 
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.enums.RoleEnum;
 import by.training.provider.command.util.PasswordCoder;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Admin;
 import by.training.provider.entity.Customer;
@@ -64,40 +64,40 @@ public class MainCommandTest {
     public void shouldReturnRedirectSuccessUserActionWhenRoleUser() {
         when(session.getAttribute(ParamNames.ROLE)).thenReturn(RoleEnum.USER.getRole());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.REDIRECT, response.getMethod());
-        Assert.assertEquals(PageEnum.SUCCESS_USER_ACTION_COMMAND, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SUCCESS_USER_ACTION_COMMAND, response.getUrl());
     }
 
     @Test
     public void shouldReturnRedirectSuccessAdminWhenRoleAdmin() {
         when(session.getAttribute(ParamNames.ROLE)).thenReturn(RoleEnum.ADMIN.getRole());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.REDIRECT, response.getMethod());
-        Assert.assertEquals(PageEnum.SUCCESS_ADMIN_ACTION_COMMAND, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SUCCESS_ADMIN_ACTION_COMMAND, response.getUrl());
     }
 
     @Test
     public void shouldReturnRedirectLoginWhenNullEmail() {
         when(request.getParameter(ParamNames.EMAIL)).thenReturn(null);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.REDIRECT, response.getMethod());
-        Assert.assertEquals(PageEnum.LOGIN_COMMAND, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.LOGIN_COMMAND, response.getUrl());
     }
 
     @Test
     public void shouldReturnRedirectLoginWhenNullPassword() {
         when(request.getParameter(ParamNames.PASSWORD)).thenReturn(null);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.REDIRECT, response.getMethod());
-        Assert.assertEquals(PageEnum.LOGIN_COMMAND, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.LOGIN_COMMAND, response.getUrl());
     }
 
     @Test
@@ -110,10 +110,10 @@ public class MainCommandTest {
         when(planService.getAllPlans()).thenReturn(Collections.emptyList());
         when(customerService.getAllCustomersWithPlan()).thenReturn(Collections.emptyList());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ADMIN, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ADMIN, response.getUrl());
     }
 
     @Test
@@ -123,13 +123,13 @@ public class MainCommandTest {
         user.setPassword(PASSWORD_HASH);
         when(adminService.getPersonByEmail(anyString())).thenReturn(null);
         when(userService.getPersonByEmail(anyString())).thenReturn(user);
-        when(userService.getUserByUnique(anyString())).thenReturn(user);
+        when(userService.getUserByEmail(anyString())).thenReturn(user);
         when(userService.getEagerUser(any())).thenReturn(user);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.USER, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.USER, response.getUrl());
     }
 
     @Test
@@ -141,20 +141,20 @@ public class MainCommandTest {
         when(userService.getPersonByEmail(anyString())).thenReturn(null);
         when(customerService.getPersonByEmail(anyString())).thenReturn(customer);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.LOGIN, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.LOGIN, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardErrorWhenDataExceptionThrown() throws DataException {
         when(adminService.getPersonByEmail(anyString())).thenThrow(new DataException());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 
     @Test
@@ -163,9 +163,9 @@ public class MainCommandTest {
         when(userService.getPersonByEmail(anyString())).thenReturn(null);
         when(customerService.getPersonByEmail(anyString())).thenReturn(null);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.LOGIN, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.LOGIN, response.getUrl());
     }
 }

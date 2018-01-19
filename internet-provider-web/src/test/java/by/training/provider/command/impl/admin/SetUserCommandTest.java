@@ -1,9 +1,9 @@
 package by.training.provider.command.impl.admin;
 
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Customer;
 import by.training.provider.service.CustomerService;
@@ -42,19 +42,19 @@ public class SetUserCommandTest {
     public void shouldReturnForwardErrorWhenDataException() throws DataException {
         when(service.getEagerCustomerById(any())).thenThrow(new DataException());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardSetUserWhenValidData() throws DataException {
         when(service.getEagerCustomerById(any())).thenReturn(customer);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.SET_USER, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SET_USER, response.getUrl());
     }
 }

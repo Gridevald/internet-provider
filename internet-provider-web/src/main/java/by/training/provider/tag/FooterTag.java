@@ -1,10 +1,12 @@
 package by.training.provider.tag;
 
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
+/**
+ * Footer tag. Writes copyright sign on web page.
+ */
 public class FooterTag extends TagSupport {
 
     private static final String FOOTER = "<footer>" +
@@ -12,7 +14,7 @@ public class FooterTag extends TagSupport {
             "</footer>";
 
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
 
         try {
             JspWriter writer = pageContext.getOut();

@@ -1,9 +1,9 @@
 package by.training.provider.command.impl.user;
 
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.PageEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.PageResponse;
+import by.training.provider.dto.UrlResponse;
 import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Payment;
 import by.training.provider.entity.User;
@@ -59,10 +59,10 @@ public class MakePaymentCommandTest {
     public void shouldReturnForwardSetPaymentWhenInvalidPayment() {
         when(request.getParameter(ParamNames.SUM)).thenReturn(INVALID_SUM);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.SET_PAYMENT, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SET_PAYMENT, response.getUrl());
     }
 
     @Test
@@ -70,20 +70,20 @@ public class MakePaymentCommandTest {
         doNothing().when(userService).updateUser(user);
         doNothing().when(paymentService).addPayment(payment);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.REDIRECT, response.getMethod());
-        Assert.assertEquals(PageEnum.SUCCESS_USER_ACTION_COMMAND, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.SUCCESS_USER_ACTION_COMMAND, response.getUrl());
     }
 
     @Test
     public void shouldReturnForwardErrorWhenDataExceptionOnUserService() throws DataException {
         doThrow(new DataException()).when(userService).updateUser(user);
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 
     @Test
@@ -91,9 +91,9 @@ public class MakePaymentCommandTest {
         doNothing().when(userService).updateUser(user);
         doThrow(new DataException()).when(paymentService).addPayment(any());
 
-        PageResponse response = command.execute(request);
+        UrlResponse response = command.execute(request);
 
         Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
-        Assert.assertEquals(PageEnum.ERROR, response.getPageUrl());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
     }
 }
