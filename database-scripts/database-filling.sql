@@ -53,8 +53,8 @@ VALUES
     '0',
     'Минск',
     'Яна Чечота',
-    '7',
-    '71',
+    '8',
+    '38',
     (SELECT plan.id FROM internet_provider.plan WHERE plan.name = 'Анлим 100')),
 
     ('ivan.ivanov@mail.ru',
