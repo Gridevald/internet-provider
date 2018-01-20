@@ -11,6 +11,13 @@ public class CustomerValidator {
 
     private UserService userService;
 
+    /**
+     * Checks:
+     * - email by pattern;
+     * - if customer with given email exists;
+     *
+     * @param userService UserService.
+     */
     public CustomerValidator(UserService userService) {
         this.userService = userService;
     }
@@ -32,6 +39,13 @@ public class CustomerValidator {
         return true;
     }
 
+    /**
+     * Checks if given passwords are equals.
+     *
+     * @param pass1 first password.
+     * @param pass2 second password.
+     * @return true if passwords are equals, false otherwise.
+     */
     public boolean isPasswordsEquals(String pass1, String pass2) {
         return pass1 != null && pass2 != null && pass1.equals(pass2);
     }

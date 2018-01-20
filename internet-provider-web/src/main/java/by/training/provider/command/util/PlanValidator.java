@@ -6,6 +6,13 @@ import java.math.BigDecimal;
 
 public class PlanValidator {
 
+    /**
+     * Validates Plan:
+     * - not empty name;
+     * - not empty description;
+     * - download and upload speed between 1 and 100;
+     * - price more then 0.
+     */
     public static boolean isValidPlan(Plan plan) {
 
         String name = plan.getName();
