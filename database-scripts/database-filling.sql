@@ -141,8 +141,9 @@ INSERT INTO internet_provider.customer
     customer.apartments,
     customer.plan_id)
 VALUES
+    -- password: customer
     ('myemail@email.org',
-    'ace7c38be2b4c405a887d24d2867c6b599364e63',
+    'b39f008e318efd2bb988d724a161b61c6909677f',
     'Евпатий',
     'Филимонович',
     'Дрожинский',
