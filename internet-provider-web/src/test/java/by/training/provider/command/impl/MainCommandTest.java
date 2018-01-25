@@ -1,12 +1,12 @@
 package by.training.provider.command.impl;
 
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.enums.RoleEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.util.PasswordCoder;
+import by.training.provider.controller.ResponseMethod;
+import by.training.provider.controller.UrlResponse;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.UrlResponse;
-import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.Admin;
 import by.training.provider.entity.Customer;
 import by.training.provider.entity.Person;
@@ -25,7 +25,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.Collections;
 
 import static org.mockito.Matchers.any;
@@ -54,7 +53,7 @@ public class MainCommandTest {
     private MainCommand command;
 
     @Before
-    public void setUp() throws DataException{
+    public void setup() {
         when(request.getSession()).thenReturn(session);
         when(request.getParameter(ParamNames.EMAIL)).thenReturn(EMAIL);
         when(request.getParameter(ParamNames.PASSWORD)).thenReturn(PASSWORD);
@@ -148,8 +147,28 @@ public class MainCommandTest {
     }
 
     @Test
-    public void shouldReturnForwardErrorWhenDataExceptionThrown() throws DataException {
+    public void shouldReturnForwardErrorWhenDataExceptionThrownOnAdmin() throws DataException {
         when(adminService.getPersonByEmail(anyString())).thenThrow(new DataException());
+
+        UrlResponse response = command.execute(request);
+
+        Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
+    }
+
+    @Test
+    public void shouldReturnForwardErrorWhenDataExceptionThrownOnUser() throws DataException {
+        when(userService.getPersonByEmail(anyString())).thenThrow(new DataException());
+
+        UrlResponse response = command.execute(request);
+
+        Assert.assertEquals(ResponseMethod.FORWARD, response.getMethod());
+        Assert.assertEquals(UrlEnum.ERROR, response.getUrl());
+    }
+
+    @Test
+    public void shouldReturnForwardErrorWhenDataExceptionThrownOnCustomer() throws DataException {
+        when(customerService.getPersonByEmail(anyString())).thenThrow(new DataException());
 
         UrlResponse response = command.execute(request);
 

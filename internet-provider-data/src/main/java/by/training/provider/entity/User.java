@@ -18,12 +18,8 @@ public class User extends Person {
     private List<Payment> paymentList;
     private List<Traffic> trafficList;
 
-    //////////////////////////////////////////////////////////////////////
-
     public User() {
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     public Integer getContract() {
         return contract;
@@ -112,8 +108,6 @@ public class User extends Person {
     public void setTrafficList(List<Traffic> trafficList) {
         this.trafficList = trafficList;
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean equals(Object o) {

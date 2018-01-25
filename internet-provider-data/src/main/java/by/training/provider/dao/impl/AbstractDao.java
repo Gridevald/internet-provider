@@ -4,7 +4,10 @@ import by.training.provider.dao.BaseDao;
 import by.training.provider.dao.exception.DataException;
 import by.training.provider.entity.Identifiable;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,8 +24,6 @@ public abstract class AbstractDao<T extends Identifiable>
      */
     private Connection connection;
 
-    //////////////////////////////////////////////////////////////////////
-
     AbstractDao(Connection connection) {
         this.connection = connection;
     }
@@ -36,8 +37,6 @@ public abstract class AbstractDao<T extends Identifiable>
     protected Connection getConnection() {
         return connection;
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     /**
      * Returns query for select all elements from table.
@@ -115,8 +114,6 @@ public abstract class AbstractDao<T extends Identifiable>
     protected abstract void prepareForInsert(PreparedStatement statement,
                                              T element)
             throws DataException;
-
-    //////////////////////////////////////////////////////////////////////
 
     /**
      * Returns "lazy" T object by unique parameter.

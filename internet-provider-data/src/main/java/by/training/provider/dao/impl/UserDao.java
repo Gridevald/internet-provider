@@ -80,14 +80,9 @@ public class UserDao extends AbstractDao<User> {
             "user.building, user.apartments, user.plan_id) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    //////////////////////////////////////////////////////////////////////
-
     public UserDao(Connection connection) {
         super(connection);
     }
-
-    //////////////////////////////////////////////////////////////////////
-
 
     @Override
     protected String getSelectQuery() {

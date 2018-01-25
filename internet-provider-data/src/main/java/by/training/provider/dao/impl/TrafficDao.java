@@ -64,13 +64,9 @@ public class TrafficDao extends AbstractDao<Traffic> {
             "traffic.date, traffic.user_id) " +
             "VALUES (?, ?, ?, ?)";
 
-    //////////////////////////////////////////////////////////////////////
-
     public TrafficDao(Connection connection) {
         super(connection);
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     protected String getSelectQuery() {

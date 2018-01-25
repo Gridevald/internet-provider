@@ -76,13 +76,9 @@ public class CustomerDao extends AbstractDao<Customer> {
             "customer.plan_id) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    //////////////////////////////////////////////////////////////////////
-
     public CustomerDao(Connection connection) {
         super(connection);
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     protected String getSelectQuery() {

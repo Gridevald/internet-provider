@@ -2,8 +2,6 @@ package by.training.provider.controller;
 
 import by.training.provider.command.Command;
 import by.training.provider.command.CommandFactory;
-import by.training.provider.dto.UrlResponse;
-import by.training.provider.dto.ResponseMethod;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

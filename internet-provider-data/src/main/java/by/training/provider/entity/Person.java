@@ -14,12 +14,8 @@ public abstract class Person implements Identifiable {
     private String middleName;
     private String lastName;
 
-    //////////////////////////////////////////////////////////////////////
-
     public Person() {
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     public Integer getId() {
         return id;
@@ -68,8 +64,6 @@ public abstract class Person implements Identifiable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean equals(Object o) {

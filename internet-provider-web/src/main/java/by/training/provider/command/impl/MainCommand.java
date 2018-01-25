@@ -2,13 +2,13 @@ package by.training.provider.command.impl;
 
 import by.training.provider.command.Command;
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.enums.RoleEnum;
+import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.impl.exception.InvalidPasswordException;
 import by.training.provider.command.util.PasswordCoder;
+import by.training.provider.controller.ResponseMethod;
+import by.training.provider.controller.UrlResponse;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.UrlResponse;
-import by.training.provider.dto.ResponseMethod;
 import by.training.provider.entity.*;
 import by.training.provider.service.*;
 import org.apache.logging.log4j.LogManager;
@@ -199,8 +199,7 @@ public class MainCommand implements Command {
     private class CustomerHandleRequest implements  HandleRequest {
 
         @Override
-        public UrlResponse handle(HttpServletRequest request, String email)
-                throws DataException {
+        public UrlResponse handle(HttpServletRequest request, String email) {
 
             request.setAttribute(ParamNames.LOGIN_ERROR, NOT_ACTIVE_CODE);
 

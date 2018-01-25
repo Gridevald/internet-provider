@@ -6,12 +6,8 @@ public class Admin extends Person {
 
     private Integer personnelNumber;
 
-    //////////////////////////////////////////////////////////////////////
-
     public Admin() {
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     public Integer getPersonnelNumber() {
         return personnelNumber;
@@ -20,8 +16,6 @@ public class Admin extends Person {
     public void setPersonnelNumber(Integer personnelNumber) {
         this.personnelNumber = personnelNumber;
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean equals(Object o) {

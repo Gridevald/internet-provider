@@ -11,12 +11,8 @@ public class Traffic implements Identifiable {
     private Date date;
     private Integer userId;
 
-    //////////////////////////////////////////////////////////////////////
-
     public Traffic() {
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     public Integer getId() {
         return id;
@@ -57,8 +53,6 @@ public class Traffic implements Identifiable {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean equals(Object o) {

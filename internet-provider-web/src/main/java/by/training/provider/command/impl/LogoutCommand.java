@@ -2,10 +2,10 @@ package by.training.provider.command.impl;
 
 import by.training.provider.command.Command;
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.enums.RoleEnum;
-import by.training.provider.dto.UrlResponse;
-import by.training.provider.dto.ResponseMethod;
+import by.training.provider.command.enums.UrlEnum;
+import by.training.provider.controller.ResponseMethod;
+import by.training.provider.controller.UrlResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

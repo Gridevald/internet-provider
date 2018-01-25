@@ -1,4 +1,4 @@
-package by.training.provider.dto;
+package by.training.provider.controller;
 
 import by.training.provider.command.enums.UrlEnum;
 

@@ -11,12 +11,8 @@ public class Customer extends Person {
     private Integer planId;
     private Plan plan;
 
-    //////////////////////////////////////////////////////////////////////
-
     public Customer() {
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     public String getCity() {
         return city;
@@ -65,8 +61,6 @@ public class Customer extends Person {
     public void setPlan(Plan plan) {
         this.plan = plan;
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean equals(Object o) {

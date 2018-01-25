@@ -11,12 +11,8 @@ public class Payment implements Identifiable {
     private Date date;
     private Integer userId;
 
-    //////////////////////////////////////////////////////////////////////
-
     public Payment() {
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     public Integer getId() {
         return id;
@@ -49,8 +45,6 @@ public class Payment implements Identifiable {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean equals(Object o) {

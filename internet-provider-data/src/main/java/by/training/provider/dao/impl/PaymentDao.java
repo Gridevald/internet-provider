@@ -61,13 +61,9 @@ public class PaymentDao extends AbstractDao<Payment> {
             "(payment.sum, payment.date, payment.user_id) " +
             "VALUES (?, ?, ?)";
 
-    //////////////////////////////////////////////////////////////////////
-
     public PaymentDao(Connection connection) {
         super(connection);
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     protected String getSelectQuery() {

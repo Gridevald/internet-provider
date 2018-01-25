@@ -1,6 +1,6 @@
 package by.training.provider.command;
 
-import by.training.provider.dto.UrlResponse;
+import by.training.provider.controller.UrlResponse;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -65,13 +65,9 @@ public class PlanDao extends AbstractDao<Plan> {
             "plan.price, plan.description) " +
             "VALUES (?, ?, ?, ?, ?)";
 
-    //////////////////////////////////////////////////////////////////////
-
     public PlanDao(Connection connection) {
         super(connection);
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     protected String getSelectQuery() {
@@ -185,7 +181,7 @@ public class PlanDao extends AbstractDao<Plan> {
             statement.setBigDecimal(4, price);
 
             String description = element.getDescription();
-            statement.setString(5, description);;
+            statement.setString(5, description);
         } catch (SQLException e) {
             throw new DataException(e.getMessage(), e.getCause());
         }

@@ -1,4 +1,4 @@
-package by.training.provider.dto;
+package by.training.provider.controller;
 
 public enum ResponseMethod {
     FORWARD, REDIRECT

@@ -2,10 +2,10 @@ package by.training.provider.command.impl;
 
 
 import by.training.provider.command.ParamNames;
-import by.training.provider.command.enums.UrlEnum;
 import by.training.provider.command.enums.RoleEnum;
-import by.training.provider.dto.UrlResponse;
-import by.training.provider.dto.ResponseMethod;
+import by.training.provider.command.enums.UrlEnum;
+import by.training.provider.controller.ResponseMethod;
+import by.training.provider.controller.UrlResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

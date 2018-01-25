@@ -2,9 +2,9 @@ package by.training.provider.command.impl.admin;
 
 import by.training.provider.command.ParamNames;
 import by.training.provider.command.enums.UrlEnum;
+import by.training.provider.controller.ResponseMethod;
+import by.training.provider.controller.UrlResponse;
 import by.training.provider.dao.exception.DataException;
-import by.training.provider.dto.UrlResponse;
-import by.training.provider.dto.ResponseMethod;
 import by.training.provider.service.PlanService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,9 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.servlet.http.HttpServletRequest;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AddPlanCommandTest {

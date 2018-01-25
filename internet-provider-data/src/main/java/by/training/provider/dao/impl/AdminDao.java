@@ -69,13 +69,9 @@ public class AdminDao
             "admin.middle_name, admin.last_name) " +
             "VALUES (?, ?, ?, ?, ?, ?)";
 
-    //////////////////////////////////////////////////////////////////////
-
     public AdminDao(Connection connection) {
         super(connection);
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     protected String getSelectQuery() {

@@ -12,12 +12,8 @@ public class Plan implements Identifiable {
     private BigDecimal price;
     private String description;
 
-    //////////////////////////////////////////////////////////////////////
-
     public Plan() {
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     public Integer getId() {
         return id;
@@ -66,8 +62,6 @@ public class Plan implements Identifiable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean equals(Object o) {
